@@ -1,7 +1,8 @@
-from app.llm.ollama_client import query_mistral
+from app.llm.ollama_client import generate
 
-response = query_mistral(
-    "What is machine learning?"
-)
+query = "what is AI deployment?"
+model = "mistral"
+
+response = generate(prompt=query, model=model, temperature=0.2)
 
 print(response)

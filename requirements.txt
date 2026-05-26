@@ -6,3 +6,7 @@ matplotlib
 gradio
 sentence-transformers
 numpy
+click
+spacy # python -m spacy download en_core_web_sm
+nltk # python -c "import nltk; nltk.download('wordnet')"
+pydantic==2.7.3
