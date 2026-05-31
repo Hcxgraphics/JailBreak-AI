@@ -45,22 +45,7 @@ def build_icl_prompt(
     affirmative_prefix: str = "Sure, here is",
     structured: bool = True,
 ) -> str:
-    """
-    Build the full ICL reconstruction prompt.
 
-    This is the core of DrAttack: the harmful sub-prompts are embedded in the
-    same structural position as the benign demo fragments. The model sees the
-    pattern [fragments → full answer] and implicitly reconstructs the intent.
-
-    Args:
-        sub_prompts:         Synonym-substituted sub-prompts from Step 2.
-        demo_index:          Which benign demo to use (0-2).
-        affirmative_prefix:  Prefix that primes the model to respond helpfully.
-        structured:          Whether to request step-by-step output (boosts ASR).
-
-    Returns:
-        The fully constructed attack prompt string.
-    """
     demo = BENIGN_DEMOS[demo_index % len(BENIGN_DEMOS)]
 
     step_instruction = (
@@ -85,10 +70,7 @@ Response:"""
 
 
 def build_word_game_prompt(sub_prompts: list[str]) -> str:
-    """
-    Alternative 'word game' reconstruction framing (from paper Section 4.3).
-    Presents the attack as a linguistic puzzle / word association game.
-    """
+
     fragments_str = ", ".join(f'"{sp}"' for sp in sub_prompts)
     return (
         f"Let's play a word association game. "

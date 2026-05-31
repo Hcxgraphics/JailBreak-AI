@@ -1,8 +1,6 @@
 
 from app.llm.ollama_client import generate
 
-# ─── LLM-based synonym generation ───────────────────────────────────────────
-
 SYNONYM_SYSTEM = (
     "You are a thesaurus assistant. "
     "Return ONLY a JSON list of alternative phrasings. No commentary."
@@ -21,10 +19,6 @@ Example output:
 
 
 def llm_synonyms(phrase: str, model: str = "mistral", top_k: int = 3) -> list[str]:
-    """
-    Use the local LLM to generate synonym paraphrases for a sub-prompt.
-    Returns a list of up to `top_k` alternatives (plus the original).
-    """
     import json, re
 
     query = SYNONYM_TEMPLATE.format(phrase=phrase, top_k=top_k)
@@ -46,10 +40,6 @@ def llm_synonyms(phrase: str, model: str = "mistral", top_k: int = 3) -> list[st
 # ─── WordNet-based synonym lookup (offline fallback) ─────────────────────────
 
 def wordnet_synonyms(word: str, top_k: int = 3) -> list[str]:
-    """
-    Retrieve lexical synonyms from WordNet via NLTK.
-    Works at the word level; used to replace key nouns/verbs in sub-prompts.
-    """
     try:
         from nltk.corpus import wordnet
         synonyms = set()
@@ -71,18 +61,7 @@ def synonym_search(
     top_k: int = 3,
     use_llm: bool = True,
 ) -> list[list[str]]:
-    """
-    For each sub-prompt, return a list of candidate phrasings (original + synonyms).
-
-    Args:
-        sub_prompts: Decomposed sub-prompts from Step 1.
-        model:       Ollama model for LLM-based synonym generation.
-        top_k:       Number of synonyms to generate per sub-prompt.
-        use_llm:     If True, use LLM; otherwise use WordNet only.
-
-    Returns:
-        List of lists – each inner list is [original, syn1, syn2, ...] for one sub-prompt.
-    """
+    
     results = []
     for sp in sub_prompts:
         if use_llm:
@@ -103,10 +82,7 @@ def synonym_search(
 
 
 def best_synonym_combo(synonym_candidates: list[list[str]]) -> list[str]:
-    """
-    Select the top-1 (most different from original) synonym for each sub-prompt.
-    Simple heuristic: pick index 1 if available, else original.
-    """
+  
     return [
         candidates[1] if len(candidates) > 1 else candidates[0]
         for candidates in synonym_candidates

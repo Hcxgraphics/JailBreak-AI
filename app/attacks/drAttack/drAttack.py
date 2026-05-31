@@ -98,19 +98,7 @@ class DrAttackPipeline:
         run_baseline: bool = True,
         stop_on_success: bool = True,
     ) -> DrAttackResult:
-        """
-        Run the full DrAttack pipeline on a single prompt.
-
-        Args:
-            prompt:           The original (harmful) prompt to attack with.
-            strategies:       List of reconstruction strategy names to try.
-                              Defaults to all available strategies.
-            run_baseline:     Whether to also query the victim directly (no attack).
-            stop_on_success:  Stop trying strategies after first success.
-
-        Returns:
-            DrAttackResult with all intermediate steps and final outcome.
-        """
+        
         if strategies is None:
             strategies = list(RECONSTRUCTION_STRATEGIES.keys())
 

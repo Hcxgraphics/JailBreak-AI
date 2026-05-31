@@ -53,11 +53,10 @@ def decompose_prompt(prompt: str, model: str = "mistral") -> list[str]:
 
 
 
-
 _nlp: Optional[object] = None
 
 
-def _get_nlp():
+def _get_nlp(): #A private helper that loads the spaCy English model on first use and caches it in a module-level variable. 
     global _nlp
     if _nlp is None:
         try:

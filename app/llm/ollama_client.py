@@ -51,7 +51,7 @@ def chat(
     return resp.json()["message"]["content"].strip()
 
 
-def is_ollama_running() -> bool:
+def is_ollama_running() -> bool: # Health check up
     try:
         r = requests.get(f"{OLLAMA_BASE_URL}/api/tags", timeout=5)
         return r.status_code == 200
