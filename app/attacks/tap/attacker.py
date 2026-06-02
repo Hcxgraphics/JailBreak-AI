@@ -119,15 +119,7 @@ class TAPAttacker:
         self,
         scored_branches: list[dict] | None = None,
     ) -> list[dict]:
-        """
-        Generate branch_factor candidate prompts.
 
-        First call (scored_branches=None): cold start.
-        Subsequent calls: receive list of {prompt, response, score} dicts.
-
-        Returns:
-            List of {"improvement": str, "prompt": str} dicts.
-        """
         self._iteration += 1
 
         if scored_branches is None:

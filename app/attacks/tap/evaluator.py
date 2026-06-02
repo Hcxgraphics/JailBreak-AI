@@ -3,7 +3,7 @@ import re
 from app.llm.ollama_client import generate
 
 
-# ── Phase 1: Off-topic / relevance pruning ────────────────────────────────────
+# ── Phase 1: Off-topic 
 
 OFF_TOPIC_PROMPT = """\
 You are a red-teaming evaluator. Your task is to assess whether a candidate \
@@ -142,10 +142,6 @@ class TAPEvaluator:
         return branches
 
     def keep_top_k(self, branches: list[dict]) -> list[dict]:
-        """
-        Phase 2 pruning: retain only the top-K scoring branches.
-        These become the seed for the next iteration's attacker call.
-        """
         return sorted(branches, key=lambda b: b["score"], reverse=True)[: self.top_k]
 
     def is_jailbreak(self, score: int) -> bool:
