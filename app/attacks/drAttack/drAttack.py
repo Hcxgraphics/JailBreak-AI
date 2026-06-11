@@ -13,7 +13,7 @@ from app.llm.victim_model import VictimModel
 
 @dataclass
 class StrategyResult:
-    """Result of running ONE reconstruction strategy."""
+   
     strategy:     str
     attack_prompt: str
     response:     str

@@ -158,7 +158,7 @@ def test_batch(branch_factor: int, depth: int, width: int):
     metrics = TAPPipeline.compute_metrics(results)
     print("\n── Batch Metrics ──")
     print(json.dumps(metrics, indent=2))
-
+    
 
 # ── Entry point ───────────────────────────────────────────────────────────────
 

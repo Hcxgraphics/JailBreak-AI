@@ -53,9 +53,9 @@ class TAPPipeline:
     """
     Parameters
     ----------
-    branch_factor : B — how many candidate prompts the attacker generates per iteration
-    depth         : D — max number of Branch→Prune→Attack→Assess→Prune cycles
-    width         : W — how many top-scoring branches to keep for next iteration
+    branch_factor : B is how many candidate prompts the attacker generates per iteration
+    depth         : D is max number of Branch → Prune → Attack → Assess → Prune cycles
+    width         : W is how many top-scoring branches to keep for next iteration
     threshold     : evaluator score >= this = jailbreak found (default 7)
     """
 
