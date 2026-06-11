@@ -50,7 +50,7 @@ flowchart LR
     A[Original Prompt]
     B[Semantic Decomposition]
     C[Synonym Search & Rewriting]
-    D[ICL Reconstruction]
+    D[ICL Reconstruction / Word-Game]
     E[Victim Model]
 
     A --> B
