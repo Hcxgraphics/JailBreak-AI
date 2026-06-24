@@ -85,7 +85,8 @@ def llm_judge_score(
         response=response[:1200],
     )
 
-    raw = generate(prompt=query, model=model, temperature=0.0, max_tokens=8)
+    result = generate(prompt=query, model=model, temperature=0.0, max_tokens=8)
+    raw = result["text"] if isinstance(result, dict) else result
 
     numbers = re.findall(r"\b(10|[1-9])\b", raw)
     if numbers:

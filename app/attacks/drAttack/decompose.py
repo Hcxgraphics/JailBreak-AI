@@ -25,7 +25,8 @@ Example output format:
 
 def decompose_prompt(prompt: str, model: str = "mistral") -> list[str]:
     query = DECOMPOSE_TEMPLATE.format(sentence=prompt)
-    raw = generate(prompt=query, model=model, system=DECOMPOSE_SYSTEM, temperature=0.2)
+    result = generate(prompt=query, model=model, system=DECOMPOSE_SYSTEM, temperature=0.2)
+    raw = result["text"] if isinstance(result, dict) else result
 
     # Parse the JSON list out of the response
     import json, re

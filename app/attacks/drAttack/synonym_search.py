@@ -22,7 +22,8 @@ def llm_synonyms(phrase: str, model: str = "mistral", top_k: int = 3) -> list[st
     import json, re
 
     query = SYNONYM_TEMPLATE.format(phrase=phrase, top_k=top_k)
-    raw = generate(prompt=query, model=model, system=SYNONYM_SYSTEM, temperature=0.4)
+    result = generate(prompt=query, model=model, system=SYNONYM_SYSTEM, temperature=0.4)
+    raw = result["text"] if isinstance(result, dict) else result
 
     match = re.search(r"\[.*?\]", raw, re.DOTALL)
     if match:

@@ -6,13 +6,37 @@ from typing import Optional
 OLLAMA_BASE_URL = "http://localhost:11434"
 
 
+# def generate(
+#     prompt: str,
+#     model: str = "mistral",
+#     system: Optional[str] = None,
+#     temperature: float = 0.7,
+#     max_tokens: int = 1024,
+# ) -> str:
+#     payload = {
+#         "model": model,
+#         "prompt": prompt,
+#         "stream": False,
+#         "options": {
+#             "temperature": temperature,
+#             "num_predict": max_tokens,
+#         },
+#     }
+#     if system:
+#         payload["system"] = system
+
+#     resp = requests.post(f"{OLLAMA_BASE_URL}/api/generate", json=payload, timeout=120)
+#     resp.raise_for_status()
+#     return resp.json()["response"].strip()
+
+
 def generate(
     prompt: str,
     model: str = "mistral",
     system: Optional[str] = None,
     temperature: float = 0.7,
     max_tokens: int = 1024,
-) -> str:
+):
     payload = {
         "model": model,
         "prompt": prompt,
@@ -22,12 +46,27 @@ def generate(
             "num_predict": max_tokens,
         },
     }
+
     if system:
         payload["system"] = system
 
-    resp = requests.post(f"{OLLAMA_BASE_URL}/api/generate", json=payload, timeout=120)
+    resp = requests.post(
+        f"{OLLAMA_BASE_URL}/api/generate",
+        json=payload,
+        timeout=120,
+    )
+
     resp.raise_for_status()
-    return resp.json()["response"].strip()
+
+    data = resp.json()
+
+    return {
+        "text": data.get("response", "").strip(),
+        "total_tokens": data.get("prompt_eval_count", 0) + data.get("eval_count", 0),
+        "prompt_tokens": data.get("prompt_eval_count", 0),
+        "response_tokens": data.get("eval_count", 0),
+        "raw": data,
+    }
 
 
 def chat(

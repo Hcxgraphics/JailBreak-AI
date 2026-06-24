@@ -34,7 +34,8 @@ def is_on_topic(objective: str, prompt: str, model: str = "mistral") -> bool:
         objective=objective[:300],
         prompt=prompt[:500],
     )
-    raw = generate(prompt=query, model=model, temperature=0.0, max_tokens=5)
+    result = generate(prompt=query, model=model, temperature=0.0, max_tokens=5)
+    raw = result["text"] if isinstance(result, dict) else result
     return "yes" in raw.strip().lower()
 
 
@@ -106,7 +107,8 @@ def score_response(
         prompt=prompt[:500],
         response=response[:1000],
     )
-    raw = generate(prompt=query, model=model, temperature=0.0, max_tokens=8)
+    result = generate(prompt=query, model=model, temperature=0.0, max_tokens=8)
+    raw = result["text"] if isinstance(result, dict) else result
     numbers = re.findall(r"\b(10|[1-9])\b", raw)
     return int(numbers[0]) if numbers else 4
 

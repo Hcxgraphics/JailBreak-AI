@@ -29,12 +29,23 @@ class VictimModel:
         self.temperature = temperature
 
     def query(self, prompt: str, system: str | None = None) -> str:
+        result = generate(
+            prompt=prompt,
+            model=self.model_name,
+            system=system,
+            temperature=self.temperature,
+        )
+
+        return result["text"]
+
+    def query_with_usage(self, prompt: str, system: str | None = None) -> dict:
         return generate(
             prompt=prompt,
             model=self.model_name,
             system=system,
             temperature=self.temperature,
         )
+        
 
     def query_chat(self, messages: list[dict]) -> str:
         return chat(
